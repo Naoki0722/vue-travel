@@ -1,39 +1,28 @@
 <template>
   <div class="home">
     <div class="main_contents">
-      <p>見たい観光地の県を表示</p>
+      <h2>見たい観光地の県を表示！！</h2>
       <div class="chartdiv"></div>
     </div>
     <v-divider
       class="ma-4"
       vertical
     ></v-divider>
-    <div class="sub_contents">
-      <v-card class="mx-auto">
-        <v-img
-          src="https://lh3.googleusercontent.com/proxy/ut2MTHOiN4NpsTPPrfiaB0e8jWqFlK7pO0i_MXsNmQBM5cmbPMfZTyNIKCHZuMKZK_I1eiH5ZT-URDWDx1yeWJ4hIrePYVxOVrQaTIv_tiEF28sAEDM9kg5SBph-Fjxzeffc"
-          alt=""
-          class="align-end"
-        >
-          <v-card-title>太宰府天満宮</v-card-title>
-        </v-img>
-        <v-card-subtitle>福岡県太宰府市</v-card-subtitle>
-        <v-card-text>３号線沿いにある人気観光地</v-card-text>
-        <v-card-actions>
-          <v-btn>詳しくみる</v-btn>
-        </v-card-actions>
-      </v-card>
-    </div>
+    <SubContents></SubContents>
   </div>
 </template>
 
 <script>
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4maps from "@amcharts/amcharts4/maps"
+import SubContents from "../components/SubContents"
 // 日本地図を表示
 import am4geodata_japanlow from "@amcharts/amcharts4-geodata/japanLow"
 export default {
   name: 'Home',
+  components: {
+    SubContents
+  },
   mounted() {
     
     let map = am4core.create("chartdiv", am4maps.MapChart)
@@ -56,24 +45,15 @@ export default {
     polygonTemplate.fill = am4core.color("#74B266");
     let hs = polygonTemplate.states.create("hover");
     hs.properties.fill = am4core.color("#367B25");
-    // console.log(hs.properties.fill)
-
-    // クリックしたら拡大メソッド
-    polygonSeries.mapPolygons.template.events.on("hit", function(ev) {
-      let pref = ev.target.dataItem.dataContext.name
-      if(pref === "Oita") {
-        console.log("大分県です")
-        window.open(pref);
-        // this.prefecture(pref)
-      } else {
-        console.log("大分県ではありません")
-      }
-    })
+    // クリックしたら各都道府県の観光地一覧に飛ばす
+    polygonSeries.mapPolygons.template.events.on("hit", this.prefecture)
   },
   methods: {
-    // prefecture(a) {
-    //   this.$router.push(a)
-    // }
+    prefecture(ev) {
+      let pref_code = ev.target.dataItem.dataContext.id
+      let pref = pref_code.replace('JP-', '')
+      this.$router.push({ name: "Pref", params: { id: pref } })
+    }
   },
   beforeDestroy() {
     if(this.map) {
@@ -95,5 +75,14 @@ export default {
   height: 80vh;
   width: 70vw;
   margin: 0 auto;
+}
+
+.main_contents {
+  text-align: center;
+}
+
+.main_contents h2 {
+  font-size: 1.5rem;
+  padding: 5% 0;
 }
 </style>
