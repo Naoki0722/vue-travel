@@ -1,81 +1,65 @@
 <template>
-  <div class="pref_detail">
-    <SidePref></SidePref>
-    <div class="tourism_place_list">
-      <v-container>
-        <v-row align="center">
-          <v-col >
-            <v-text-field
-              label="検索キーワード"
-              width="40%"
-              prepend-icon="mdi-clipboard-search"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="1" sm="1" md="2">
-            <v-btn
-              rounded
-              color="green accent-2"
-              class="px-3"
-              right
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="3" md="3" lg="3" xl="3">
+          <SidePref></SidePref>
+        </v-col>
+        <v-col cols="10" sm="6" md="6" lg="6" xl="6" class="mx-auto">
+              <v-row align="center" class="mx-auto">
+                <v-col cols="9" sm="6" md="6" lg="6" xl="3">
+                  <v-text-field
+                    label="検索キーワード"
+                    width="40%"
+                    prepend-icon="mdi-clipboard-search"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="2" sm="3" md="3" lg="3" xl="3">
+                  <v-btn
+                    rounded
+                    color="green accent-2"
+                    class="px-3"
+                    right
+                  >
+                    検索
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" sm="3" md="3" lg="3" xl="3" class="text-center">
+                  <v-btn
+                    rounded
+                    color="green accent-2"
+                    class="px-3"
+                    right
+                    @click="PostRev"
+                  >
+                    観光地追加
+                  </v-btn>
+                </v-col>
+                <v-col cols="12"  class="text-center headline">
+                  検索結果：{{lists.length}}件
+                </v-col>
+              </v-row>
+            <v-card
+              elevation="2"
+              max-width="600"
+              class="my-5"
+              style="position: relative"
+              v-for="(list ,index) in lists" :key="index"
             >
-              検索
-            </v-btn>
-          </v-col>
-          <v-col cols="12" sm="3" md="4" class="text-center">
-            <v-btn
-              rounded
-              color="green accent-2"
-              class="px-3"
-              right
-              @click="PostRev"
-            >
-              評価投稿
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-card
-        elevation="2"
-        max-width="600"
-        class="my-5"
-        style="position: relative"
-      >
-        <v-card-title>太宰府天満宮</v-card-title>
-        <v-card-text class="pb-10">
-          説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ
-        </v-card-text>
-        <v-card-actions>
-          <v-btn absolute bottom right @click="sightseeing">続きをみる</v-btn>
-        </v-card-actions>
-      </v-card>
-      <v-card
-        elevation="2"
-        max-width="600"
-        class="my-5"
-      >
-        <v-card-title>太宰府天満宮</v-card-title>
-        <v-card-text class="pb-10">
-          説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ
-        </v-card-text>
-        <v-card-actions>
-          <v-btn absolute bottom right>続きをみる</v-btn>
-        </v-card-actions>
-      </v-card>
-      <v-card
-        elevation="2"
-        max-width="600"
-        class="my-5"
-      >
-        <v-card-title>太宰府天満宮</v-card-title>
-        <v-card-text class="pb-10">
-          説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ
-        </v-card-text>
-        <v-card-actions>
-          <v-btn absolute bottom right>続きをみる</v-btn>
-        </v-card-actions>
-      </v-card>
-    </div>
-    <SubContents></SubContents>
+              <v-card-title>{{list.title}}</v-card-title>
+              <v-card-text class="pb-10">
+                {{list.text}}
+              </v-card-text>
+              <v-card-actions>
+                <v-btn absolute bottom right @click="sightseeing">続きをみる</v-btn>
+              </v-card-actions>
+            </v-card>
+        </v-col>
+        <v-col cols="10" sm="3" md="3" lg="3" xl="3" class="mx-auto">
+          <SubContents></SubContents>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -84,6 +68,28 @@ import SubContents from "../components/SubContents"
 import SidePref from "../components/SidePref"
 export default {
   props: ["id"],
+  data() {
+    return {
+      lists: [
+        {
+          title: "太宰府天満宮",
+          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+        },
+        {
+          title: "福岡タワー",
+          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+        },
+        {
+          title: "福岡タワー",
+          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+        },
+        {
+          title: "福岡タワー",
+          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+        },
+      ]
+    }
+  },
   components: {
     SubContents,
     SidePref
@@ -98,10 +104,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.pref_detail {
-  display: flex;
-  justify-content: space-around;
-}
-</style>

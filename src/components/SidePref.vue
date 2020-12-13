@@ -1,5 +1,5 @@
 <template>
-  <div class="prefectures_detail pt-6 px-4">
+  <div class="text-center pr-3">
     <h2>鹿児島県</h2>
     <img src="https://www.illust-box.jp/db_img/sozai/00013/136187/watermark.jpg" width="150" class="d-block mx-auto">
     <h3 class="py-7">鹿児島県とは？</h3>
@@ -22,11 +22,3 @@ export default {
   
 }
 </script>
-
-<style scoped>
-
-.prefectures_detail {
-  width: 25vw;
-  text-align: center;
-}
-</style>

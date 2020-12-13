@@ -1,14 +1,30 @@
 <template>
   <div class="home">
-    <div class="main_contents" height="350">
-      <h2>見たい観光地の県を表示！！</h2>
-      <div class="chartdiv"></div>
-    </div>
-    <v-divider
-      class="ma-4 hidden-sm-and-down"
-      vertical
-    ></v-divider>
-    <SubContents></SubContents>
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          sm="8"
+          md="9"
+          lg="9"
+          l="7"
+        >
+          <h2 class="text-center">見たい観光地の県を表示！！</h2>
+          <div class="chartdiv"></div>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col
+          cols="10"
+          sm="4"
+          md="3"
+          lg="3"
+          xl="3"
+          class="mx-auto"
+        >
+        <SubContents></SubContents>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -67,32 +83,12 @@ export default {
 
 
 <style scoped>
-.home {
-  display: flex;
-  width: 100%;
-}
+
 .chartdiv {
-  height: 80vh;
-  width: 70vw;
+  height: 600px;
+}
+
+.border_line {
   margin: 0 auto;
-}
-
-.main_contents {
-  text-align: center;
-}
-
-.main_contents h2 {
-  font-size: 1.5rem;
-  padding: 5% 0;
-}
-
-@media screen and (max-width: 959px) {
-  .home {
-    display: block;
-  }
-  .chartdiv {
-    /* height: 40vh; */
-  }
-
 }
 </style>
