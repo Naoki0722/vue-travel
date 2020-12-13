@@ -2,6 +2,38 @@
   <div class="pref_detail">
     <SidePref></SidePref>
     <div class="tourism_place_list">
+      <v-container>
+        <v-row align="center">
+          <v-col >
+            <v-text-field
+              label="検索キーワード"
+              width="40%"
+              prepend-icon="mdi-clipboard-search"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1" sm="1" md="2">
+            <v-btn
+              rounded
+              color="green accent-2"
+              class="px-3"
+              right
+            >
+              検索
+            </v-btn>
+          </v-col>
+          <v-col cols="12" sm="3" md="4" class="text-center">
+            <v-btn
+              rounded
+              color="green accent-2"
+              class="px-3"
+              right
+              @click="PostRev"
+            >
+              評価投稿
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-card
         elevation="2"
         max-width="600"
@@ -59,6 +91,9 @@ export default {
   methods: {
     sightseeing() {
       this.$router.push({name: "Sightseeing", params: {number:1}})
+    },
+    PostRev() {
+      this.$router.push({name: "SightseeingPost", params: {id:1}})
     }
   }
 }

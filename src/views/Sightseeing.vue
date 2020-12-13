@@ -17,7 +17,7 @@
         </v-img>
         <v-card-subtitle>福岡県福岡市</v-card-subtitle>
         <v-card-text>
-          説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文
+          説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文
         </v-card-text>
         <v-card-text>
           <span class="grey--text text--lighten-2 caption mr-2">
@@ -77,12 +77,26 @@
             </v-card>
           </v-dialog>
           <!-- ↑ダイアログボックスでレビューを表示 -->
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              rounded
+              color="green accent-2"
+              class="mr-10 px-3"
+              right
+              @click="PostRev"
+            >
+              評価投稿
+            </v-btn>
+            <v-btn
+              rounded
+              color="green accent-2"
+              @click="PrefPage"
+            >
+              一覧へ戻る
+            </v-btn>
+          </v-card-actions>
         </v-card-text>
-        <!-- <v-treeview
-          activatable
-          :items="items"
-        ></v-treeview>
-        <v-card-text>{{items[0].children.length}}</v-card-text> -->
       </v-card>
     </div>
     <SideContents></SideContents>
@@ -118,6 +132,12 @@ export default {
     hyouka(rating) {
       this.rating = rating
       console.log(this.rating)
+    },
+    PrefPage() {
+      this.$router.push({name: "Pref", params: {id:1}})
+    },
+    PostRev() {
+      this.$router.push({name: "ReviewPost", params: {id:1,number:2}})
     }
   },
   components: {

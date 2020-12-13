@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="main_contents">
+    <div class="main_contents" height="350">
       <h2>見たい観光地の県を表示！！</h2>
       <div class="chartdiv"></div>
     </div>
     <v-divider
-      class="ma-4"
+      class="ma-4 hidden-sm-and-down"
       vertical
     ></v-divider>
     <SubContents></SubContents>
@@ -17,7 +17,7 @@ import * as am4core from "@amcharts/amcharts4/core"
 import * as am4maps from "@amcharts/amcharts4/maps"
 import SubContents from "../components/SubContents"
 // 日本地図を表示
-import am4geodata_japanlow from "@amcharts/amcharts4-geodata/japanLow"
+import am4geodata_japanlow from "@amcharts/amcharts4-geodata/japanHigh"
 export default {
   name: 'Home',
   components: {
@@ -84,5 +84,15 @@ export default {
 .main_contents h2 {
   font-size: 1.5rem;
   padding: 5% 0;
+}
+
+@media screen and (max-width: 959px) {
+  .home {
+    display: block;
+  }
+  .chartdiv {
+    /* height: 40vh; */
+  }
+
 }
 </style>

@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
+import Contact from '../views/Contact.vue'
 import Oita from '../views/Oita.vue'
 import Pref from "../views/Pref.vue"
 import Sightseeing from "../views/Sightseeing.vue"
+import ReviewPost from "../views/ReviewPost.vue"
+import SightseeingPost from "../views/SightseeingPost.vue"
+import Thanks from "../views/Thanks.vue"
+import ContactThanks from "../views/ContactThanks.vue"
 
 
 Vue.use(VueRouter)
@@ -16,9 +20,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: About,
+    path: "/contact",
+    name: "Contact",
+    component: Contact,
   },
   {
     path: "/Oita",
@@ -36,6 +40,28 @@ const routes = [
     name: "Sightseeing",
     component: Sightseeing,
     props: true,
+  },
+  {
+    path: "/ReviewPost/:id/:number",
+    name: "ReviewPost",
+    component: ReviewPost,
+    props: true,
+  },
+  {
+    path: "/SightseeingPost/:id",
+    name: "SightseeingPost",
+    component: SightseeingPost,
+    props: true,
+  },
+  {
+    path: "/Thanks",
+    name: "Thanks",
+    component: Thanks,
+  },
+  {
+    path: "/ContactThanks",
+    name: "ContactThanks",
+    component: ContactThanks,
   },
 ];
 
