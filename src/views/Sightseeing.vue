@@ -65,21 +65,29 @@
                   <v-btn
                     v-bind="attrs"
                     v-on="on"
-                    class="my-4"
                   >
                     さらにみる
                   </v-btn>
                 </template>
 
                 <v-card>
-                  <ul v-for="(data, index) in tttext" :key="index" class="pa-4">
-                    <v-card-title>{{data.title}}</v-card-title>
-                    <v-img :src="data.img" max-width="400" class="mx-auto"></v-img>
-                    <v-card-text class="py-5">
-                      <truncate clamp="→さらに読む" :length="50" less="Show Less" :text="data.text"></truncate>
-                    </v-card-text>
-                  </ul>
-                  <v-divider></v-divider>
+                  <v-row align="center" v-for="(data, index) in displayLists" :key="index" class="pa-4">
+                    <v-col cols="11" sm="8" md="4" class="mx-auto">
+                      <v-img :src="data.img" max-width="400" class="mx-auto"></v-img>
+                    </v-col>
+                    <v-col cols="11" sm="8" class="mx-auto">
+                      <v-card-title>{{data.title}}</v-card-title>
+                      <v-card-text class="py-4">
+                        <truncate clamp="→さらに読む" :length="50" less="Show Less" :text="data.text"></truncate>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                  <v-pagination
+                    v-model="page"
+                    :length="length"
+                    circle
+                    @input="pageChange"
+                  ></v-pagination>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -140,7 +148,15 @@ export default {
   data() {
     return {
       rating: 3,
-      tttext: [
+      length: 0,
+      lists: [],
+      displayLists: [],
+      pageSize: 3,
+      dialog: false
+    }
+  },
+  mounted() {
+    this.lists = [
         {
           id: 1,
           title: "楽しかったです",
@@ -158,10 +174,36 @@ export default {
           title: "もう少し時間がほしかったです",
           img: "https://spi-ra.jp/wp-content/uploads/2019/06/27537978_m-1080x720.jpg",
           text: "2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです"
+        },
+        {
+          id: 4,
+          title: "もう少し時間がほしかったです",
+          img: "https://spi-ra.jp/wp-content/uploads/2019/06/27537978_m-1080x720.jpg",
+          text: "2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです"
+        },
+        {
+          id: 5,
+          title: "もう少し時間がほしかったです",
+          img: "https://spi-ra.jp/wp-content/uploads/2019/06/27537978_m-1080x720.jpg",
+          text: "2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです"
+        },
+        {
+          id: 6,
+          title: "もう少し時間がほしかったです",
+          img: "https://spi-ra.jp/wp-content/uploads/2019/06/27537978_m-1080x720.jpg",
+          text: "2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです"
+        },
+        {
+          id: 7,
+          title: "もう少し時間がほしかったです",
+          img: "https://spi-ra.jp/wp-content/uploads/2019/06/27537978_m-1080x720.jpg",
+          text: "2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです2個目のテキストです。2個目のテキストです"
         }
-      ],
-      dialog: false
-    }
+    ],
+
+    this.length = Math.ceil(this.lists.length / this.pageSize)
+
+    this.displayLists = this.lists.slice(0, this.pageSize)
   },
   methods: {
     hyouka(rating) {
@@ -173,6 +215,9 @@ export default {
     },
     PostRev() {
       this.$router.push({name: "ReviewPost", params: {id:1,number:2}})
+    },
+    pageChange(pageNumber) {
+      this.displayLists = this.lists.slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
     }
   },
   components: {

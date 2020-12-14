@@ -68,6 +68,15 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      sessionStorage.setItem('positionY', savedPosition.y);
+      return sessionStorage
+    } else {
+      sessionStorage.setItem('positionY', 0);
+      return { x: 0, y: 0 }
+    }
+  },
   routes
 })
 

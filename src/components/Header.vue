@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <header>
     <v-app-bar
       color="light-green accent-2"
       elevate-on-scroll
       height="90px"
+      app
     >
       <v-row align="center">
         <v-col cols="1">
@@ -38,29 +39,35 @@
       >
         <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="light-green--text text--darken-3"
         >
           <v-list-item class="mb-2" @click="$router.push('/')">
-            <v-list-title>Home</v-list-title>
+            <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
           <v-list-item class="mb-2" @click="$router.push('/contact')">
-            <v-list-title>Contact</v-list-title>
+            <v-list-item-title>Contact</v-list-item-title>
           </v-list-item>
           <v-list-item class="mb-2" @click="$router.push('/about')">
-            <v-list-title>Search</v-list-title>
+            <v-list-item-title>Search</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
 
     </v-navigation-drawer>
-  </div>
+  </header>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      drawer: false
+      drawer: false,
+      group: null
+    }
+  },
+  watch: {
+    group() {
+      this.drawer = false
     }
   }
 }

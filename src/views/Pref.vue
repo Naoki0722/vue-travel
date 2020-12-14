@@ -44,7 +44,7 @@
               max-width="600"
               class="my-5"
               style="position: relative"
-              v-for="(list ,index) in lists" :key="index"
+              v-for="(list ,index) in displayLists" :key="index"
             >
               <v-card-title>{{list.title}}</v-card-title>
               <v-card-text class="pb-10">
@@ -54,6 +54,12 @@
                 <v-btn absolute bottom right @click="sightseeing">続きをみる</v-btn>
               </v-card-actions>
             </v-card>
+              <v-pagination
+                v-model="page"
+                :length="length"
+                circle
+                @input="pageChange"
+              ></v-pagination>
         </v-col>
         <v-col cols="10" sm="3" md="3" lg="3" xl="3" class="mx-auto">
           <SubContents></SubContents>
@@ -70,25 +76,64 @@ export default {
   props: ["id"],
   data() {
     return {
-      lists: [
-        {
-          title: "太宰府天満宮",
-          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
-        },
-        {
-          title: "福岡タワー",
-          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
-        },
-        {
-          title: "福岡タワー",
-          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
-        },
-        {
-          title: "福岡タワー",
-          text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
-        },
-      ]
+      page: 1,
+      length: 0,
+      lists: [],
+      displayLists: [],
+      pageSize: 5
     }
+  },
+  mounted() {
+    this.lists = [
+      {
+        title: "太宰府天満宮",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      },
+      {
+        title: "福岡タワー",
+        text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文ですよ"
+      }
+    ],
+
+    this.length = Math.ceil(this.lists.length / this.pageSize)
+
+    this.displayLists = this.lists.slice(0, this.pageSize)
   },
   components: {
     SubContents,
@@ -100,6 +145,9 @@ export default {
     },
     PostRev() {
       this.$router.push({name: "SightseeingPost", params: {id:1}})
+    },
+    pageChange(pageNumber) {
+      this.displayLists = this.lists.slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
     }
   }
 }
