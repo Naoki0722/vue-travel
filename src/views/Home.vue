@@ -45,6 +45,7 @@ export default {
     map.geodata = am4geodata_japanlow
     map.projection = new am4maps.projections.Miller()
     var polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
+    map.seriesContainer.draggable = false;
     polygonSeries.useGeodata = true
     polygonSeries.include = [
       "JP-40",
@@ -85,7 +86,10 @@ export default {
 <style scoped>
 
 .chartdiv {
-  height: 600px;
+  height: 550px;
+  width: 80%;
+  background-color: rgba(235, 235, 235, 0.945);
+  margin: 0 auto;
 }
 
 .border_line {
