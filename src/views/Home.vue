@@ -19,7 +19,7 @@
           md="3"
           lg="3"
           xl="3"
-          class="mx-auto"
+          class="mx-auto d-none d-sm-block"
         >
         <SubContents></SubContents>
         </v-col>
@@ -86,13 +86,19 @@ export default {
 <style scoped>
 
 .chartdiv {
-  height: 550px;
-  width: 80%;
-  background-color: rgba(235, 235, 235, 0.945);
+  height: 600px;
   margin: 0 auto;
 }
 
 .border_line {
   margin: 0 auto;
+}
+
+/* デザインC(スマホ) */
+@media screen and (max-width: 600px) {
+/* スマホ用レイアウト 600px以下の範囲 */
+  .chartdiv {
+    height: 50vh;
+  }
 }
 </style>

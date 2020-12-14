@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <v-footer padless >
+    <v-footer padless app>
       <v-card
         flat
         tile
