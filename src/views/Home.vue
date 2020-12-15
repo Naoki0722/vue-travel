@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-scroll-lock="look">
     <v-container>
       <v-row>
         <v-col
@@ -86,9 +86,12 @@ export default {
 
 
 <style scoped>
+body {
+  overflow: hidden;
+}
 
 .chartdiv {
-  height: 60vh;
+  height: 65vh;
   margin: 0 auto;
 }
 

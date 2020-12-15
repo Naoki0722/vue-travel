@@ -34,11 +34,6 @@ export default {
           subtitle: "福岡県太宰府市",
           text: "３号線沿いにある人気観光地"
         },
-        {
-          title: "福岡タワー",
-          subtitle: "福岡県福岡市",
-          text: "イルミネーションがきれい"
-        },
       ]
     }
   },
