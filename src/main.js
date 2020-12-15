@@ -15,16 +15,5 @@ new Vue({
   store,
   vuetify,
   StarRating,
-  render: h => h(App),
-  data: {
-    look: false
-  },
-  methods: {
-    toggoleLook: function () {
-      if (this.look == true)
-        this.look = false;
-      else
-        this.look = true;
-    }
-  }
+  render: h => h(App)
 }).$mount('#app')

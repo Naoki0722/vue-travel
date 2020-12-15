@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-scroll-lock="look">
+  <div class="home">
     <v-container>
       <v-row>
         <v-col
@@ -10,7 +10,7 @@
           l="7"
         >
           <h2 class="text-center pb-4">行きたい観光地は？</h2>
-          <div class="chartdiv"></div>
+          <div class="chartdiv" ></div>
         </v-col>
         <v-spacer></v-spacer>
         <v-col
@@ -39,8 +39,7 @@ export default {
   components: {
     SubContents
   },
-  mounted() {
-    
+  mounted() {    
     let map = am4core.create("chartdiv", am4maps.MapChart)
     map.geodata = am4geodata_japanlow
     map.projection = new am4maps.projections.Miller()
@@ -72,7 +71,13 @@ export default {
       let pref_code = ev.target.dataItem.dataContext.id
       let pref = pref_code.replace('JP-', '')
       this.$router.push({ name: "Pref", params: { id: pref } })
-    }
+    },
+    // toggoleLook: function () {
+    //   if (this.look == true)
+    //     this.look = false;
+    //   else
+    //     this.look = true;
+    // },
   },
   beforeDestroy() {
     if(this.map) {
@@ -80,7 +85,6 @@ export default {
       this.map.dispose()
     }
   },
-
 }
 </script>
 
@@ -91,7 +95,7 @@ body {
 }
 
 .chartdiv {
-  height: 65vh;
+  height: 70vh;
   margin: 0 auto;
 }
 
@@ -103,7 +107,7 @@ body {
 @media screen and (max-width: 600px) {
 /* スマホ用レイアウト 600px以下の範囲 */
   .chartdiv {
-    height: 70vh;
+    height: 60vh;
   }
 }
 </style>
