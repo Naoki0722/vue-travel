@@ -46,6 +46,8 @@ export default {
     map.projection = new am4maps.projections.Miller()
     var polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
     map.seriesContainer.draggable = false;
+    map.seriesContainer.resizable = false;
+    map.maxZoomLevel = 1;
     polygonSeries.useGeodata = true
     polygonSeries.include = [
       "JP-40",
@@ -86,7 +88,7 @@ export default {
 <style scoped>
 
 .chartdiv {
-  height: 600px;
+  height: 60vh;
   margin: 0 auto;
 }
 
@@ -98,7 +100,7 @@ export default {
 @media screen and (max-width: 600px) {
 /* スマホ用レイアウト 600px以下の範囲 */
   .chartdiv {
-    height: 50vh;
+    height: 70vh;
   }
 }
 </style>

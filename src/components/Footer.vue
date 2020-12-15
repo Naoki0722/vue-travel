@@ -1,25 +1,29 @@
 <template>
   <footer>
-    <v-footer padless app>
+    <v-footer
+      padless
+      app
+      color="light-green accent-2"
+    >
       <v-card
         flat
         tile
         width="100%"
         class="light-green accent-2 text-center"
+        
       >
         <v-card-text class="d-md-none">
           <v-btn
             v-for="(icon,index) in icons"
             :key="index"
-            class="mx-4"
+            class="mx-10"
             icon
           >
-            <v-icon size="24px" @click="$router.push(icon.name)">
+            <v-icon size="22px" @click="$router.push(icon.name)">
               {{icon.img}}
             </v-icon>
           </v-btn>
         </v-card-text>
-        <v-divider></v-divider>
         <v-card-text>
           2020-TravelReview
         </v-card-text>
@@ -42,13 +46,24 @@ export default {
           name: "contact",
           img: "mdi-email"
         },
-      ]
+      ],
+      links: [
+        'Home',
+        'About Us',
+      ],
     }
   },
   
 }
 </script>
 
-<style scoped>
 
+<style scoped>
+/* デザイン(スマホ) */
+@media screen and (max-width: 600px) {
+/* スマホ用レイアウト 600px以下の範囲 */
+  .v-card__text {
+    padding: 1px;
+  }
+}
 </style>

@@ -3,20 +3,20 @@
     <v-app-bar
       color="light-green accent-2"
       elevate-on-scroll
-      height="90px"
       app
+      
     >
       <v-row align="center">
         <v-col cols="1">
           <v-app-bar-nav-icon @click="drawer = true" class="d-md-none"></v-app-bar-nav-icon>
         </v-col>
         <v-col cols="10" sm="10" md="4">
-          <div class="title text-center">
+          <div class="title text-center flex">
             <!-- デスクトップのタイトル -->
-            <v-toolbar-title class="text-h3 hidden-sm-and-down">Travel-Review</v-toolbar-title>
+            <v-toolbar-title class="display-1 hidden-sm-and-down">Travel-Review</v-toolbar-title>
             <!-- スマホのタイトル(小さい) -->
-            <v-toolbar-title class="display-1 hidden-md-and-up">Travel-Review</v-toolbar-title>
-            <p>〜旅の思い出をシェア〜</p>
+            <v-toolbar-title class="headline hidden-md-and-up">Travel-Review</v-toolbar-title>
+            <p class="body-2">〜旅の思い出をシェア〜</p>
           </div>
         </v-col>
           <v-spacer></v-spacer>
@@ -74,8 +74,11 @@ export default {
 </script>
 
 <style scoped>
+
 .title p {
   font-size: 1rem;
   margin: 0;
 }
+
+
 </style>
