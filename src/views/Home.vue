@@ -9,7 +9,7 @@
           lg="9"
           l="7"
         >
-          <h2 class="text-center">見たい観光地の県を表示！！</h2>
+          <h2 class="text-center pb-4">行きたい観光地は？</h2>
           <div class="chartdiv"></div>
         </v-col>
         <v-spacer></v-spacer>

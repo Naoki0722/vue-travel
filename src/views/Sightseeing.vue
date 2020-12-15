@@ -59,7 +59,7 @@
               <!-- ダイアログボックスでレビューを表示↓ -->
               <v-dialog
                 v-model="dialog"
-                width="600"
+                width="700"
               >
                 <template v-slot:activator="{on, attrs}">
                   <v-btn
@@ -71,7 +71,14 @@
                 </template>
 
                 <v-card>
-                  <v-row align="center" v-for="(data, index) in displayLists" :key="index" class="pa-4">
+                  <div align="center" v-for="(data, index) in displayLists" :key="index" class="pa-4 hidden-md-and-up">
+                      <v-img :src="data.img" max-width="70%" class="mx-auto"></v-img>
+                      <v-card-title>{{data.title}}</v-card-title>
+                      <v-card-text class="pb-7">
+                        <truncate clamp="→さらに読む" :length="50" less="Show Less" :text="data.text"></truncate>
+                      </v-card-text>
+                  </div>
+                  <v-row align="center" v-for="(data, index) in displayLists" :key="index" class="pa-4 hidden-sm-and-down">
                     <v-col cols="11" sm="8" md="4" class="mx-auto">
                       <v-img :src="data.img" max-width="400" class="mx-auto"></v-img>
                     </v-col>
@@ -99,6 +106,35 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
+                <!-- <v-card>
+                  <v-row align="center" v-for="(data, index) in displayLists" :key="index" class="pa-4">
+                    <v-col cols="11" sm="8" md="4" class="mx-auto">
+                      <v-img :src="data.img" max-width="400" class="mx-auto"></v-img>
+                    </v-col>
+                    <v-col cols="11" sm="8" class="mx-auto">
+                      <v-card-title>{{data.title}}</v-card-title>
+                      <v-card-text class="py-4">
+                        <truncate clamp="→さらに読む" :length="50" less="Show Less" :text="data.text"></truncate>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                  <v-pagination
+                    v-model="page"
+                    :length="length"
+                    circle
+                    @input="pageChange"
+                  ></v-pagination>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="primary"
+                      text
+                      @click="dialog = false"
+                    >
+                      閉じる
+                    </v-btn>
+                  </v-card-actions>
+                </v-card> -->
               </v-dialog>
               <!-- ↑ダイアログボックスでレビューを表示 -->
               <v-card-actions>
@@ -227,3 +263,11 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+html,
+html.overflow-y-hidden {
+  overflow-x: scroll !important;
+}
+</style>

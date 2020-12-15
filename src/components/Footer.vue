@@ -59,6 +59,14 @@ export default {
 
 
 <style scoped>
+
+/* デザイン(タブレット) */
+@media screen and (max-width: 960px) {
+/* タブレット用レイアウト 960px以下の範囲 */
+  .v-card__text {
+    padding: 0px;
+  }
+}
 /* デザイン(スマホ) */
 @media screen and (max-width: 600px) {
 /* スマホ用レイアウト 600px以下の範囲 */
