@@ -28,7 +28,7 @@
             >
               <form>
                 <v-text-field
-                  v-model="name"
+                  v-model="place_name"
                   label="観光地"
                   clearable
                   clear-icon="mdi-close-circle"
@@ -44,13 +44,23 @@
                   height="250"
                 ></v-textarea>
                 <v-text-field
+                  v-model="name"
                   label="名前"
+                  clearable
+                  clear-icon="mdi-close-circle"
+                  class="py-1"
+                  height="50"
+                ></v-text-field>
+                <v-text-field
+                  v-model="title"
+                  label="タイトル"
                   clearable
                   clear-icon="mdi-close-circle"
                   class="py-5"
                   height="50"
                 ></v-text-field>
                 <v-textarea
+                  v-model="comment"
                   outlined
                   label="レビューを記載ください"
                   clearable
@@ -119,6 +129,7 @@
 <script>
 import SidePref from "../components/SidePref"
 import SideContents from "../components/SubContents"
+import axios from 'axios'
 export default {
   props: ["id", "number"],
   components: {
@@ -127,6 +138,11 @@ export default {
   },
   data() {
     return {
+      place_name: "",
+      description: "",
+      name: "",
+      comment: "",
+      title: "",
       rating: 0,
       loader: null,
       loading: false,
@@ -138,7 +154,31 @@ export default {
       this[l] = !this[l]
 
       setTimeout(() => (
-        this.$router.push({name: "Thanks"})
+        axios
+          .post('http://localhost:8001/api/tourists', {
+            place_name: this.place_name,
+            description: this.description,
+            place_image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg",
+            pref_id: this.id,
+            name: this.name,
+            title: this.title,
+            review: this.rating,
+            comment: this.comment,
+            image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg"
+
+
+          })
+          .then((response) => {
+            console.log(response);
+            this.place_name = "",
+            this.description = "",
+            this.pref_id = "",
+            this.name = "";
+            this.review = "";
+            this.title = "";
+            this.rating = 0;
+          }),
+        this.$router.push({name: "Thanks",  params: { id: this.id}})
       ), 3000)      
     },
   },

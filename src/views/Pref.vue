@@ -46,7 +46,7 @@
               style="position: relative"
               v-for="(list ,index) in displayLists" :key="index"
             >
-              <v-card-title>{{list.name}}</v-card-title>
+              <v-card-title>{{list.place_name}}</v-card-title>
               <v-card-text class="pb-10">
                 {{list.description}}
               </v-card-text>

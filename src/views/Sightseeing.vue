@@ -174,8 +174,8 @@ export default {
       'http://localhost:8001/api/tourists/' + this.number
     );
     // 観光地詳細情報
-    this.title = item.data.data.item.name;
-    this.image = item.data.data.item.image_path;
+    this.title = item.data.data.item.place_name;
+    this.image = item.data.data.item.place_image_path;
     this.description = item.data.data.item.description;
 
     // それに付随するコメント情報
