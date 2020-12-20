@@ -14,9 +14,10 @@
 
 <script>
 export default {
+  props: ["id","number"],
   methods: {
     PrefPage() {
-      this.$router.push({name: "Pref" ,params: {id:1}})
+      this.$router.push({name: 'Pref', params: { id: this.id}})
     }
   }
 }

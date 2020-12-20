@@ -9,6 +9,7 @@ import ReviewPost from "../views/ReviewPost.vue"
 import SightseeingPost from "../views/SightseeingPost.vue"
 import Thanks from "../views/Thanks.vue"
 import ContactThanks from "../views/ContactThanks.vue"
+import NotFound from "../views/404.vue"
 
 
 Vue.use(VueRouter)
@@ -54,15 +55,21 @@ const routes = [
     props: true,
   },
   {
-    path: "/Thanks",
+    path: "/thanks/:id/:number",
     name: "Thanks",
     component: Thanks,
+    props: true
   },
   {
     path: "/ContactThanks",
     name: "ContactThanks",
     component: ContactThanks,
   },
+  {
+    path: "*",
+    name: "notFound",
+    component: NotFound
+  }
 ];
 
 const router = new VueRouter({

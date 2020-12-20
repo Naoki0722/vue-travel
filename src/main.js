@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import StarRating from "vue-star-rating"
 import VScrollLock from 'v-scroll-lock'
 
+
 Vue.config.productionTip = false
 Vue.component("star-rating", StarRating);
 Vue.use(VScrollLock);

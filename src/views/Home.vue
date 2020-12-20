@@ -71,13 +71,7 @@ export default {
       let pref_code = ev.target.dataItem.dataContext.id
       let pref = pref_code.replace('JP-', '')
       this.$router.push({ name: "Pref", params: { id: pref } })
-    },
-    // toggoleLook: function () {
-    //   if (this.look == true)
-    //     this.look = false;
-    //   else
-    //     this.look = true;
-    // },
+    }
   },
   beforeDestroy() {
     if(this.map) {

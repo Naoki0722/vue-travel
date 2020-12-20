@@ -10,7 +10,7 @@
           xl="3"
           class="mx-auto"
         >
-          <SidePref></SidePref>
+          <SidePref :parentData="id"></SidePref>
         </v-col>
         <v-col
           cols="11"
@@ -27,14 +27,24 @@
           >
             <form>
               <v-text-field
+                v-model="name"
                 label="名前"
                 placeholder="山田太郎"
                 clearable
                 clear-icon="mdi-close-circle"
                 class="pt-10 pb-5"
               ></v-text-field>
+              <v-text-field
+                v-model="title"
+                label="レビュータイトル"
+                placeholder="楽しかった"
+                clearable
+                clear-icon="mdi-close-circle"
+                class="pt-2 pb-5"
+              ></v-text-field>
 
               <v-textarea
+                v-model="review"
                 outlined
                 label="レビューを記載ください"
                 clearable
@@ -102,13 +112,18 @@
 <script>
 import SidePref from "../components/SidePref"
 import SideContents from "../components/SubContents"
+import axios from 'axios'
 export default {
+  props: ["id","number"],
   components: {
     SidePref,
     SideContents
   },
   data() {
     return {
+      name: "",
+      review: "",
+      title: "",
       rating: 0,
       loader: null,
       loading: false,
@@ -120,7 +135,25 @@ export default {
       this[l] = !this[l]
 
       setTimeout(() => (
-        this.$router.push({name: "Thanks"})
+        axios
+          .post('http://localhost:8001/api/comments', {
+            tourist_id: this.number,
+            name: this.name,
+            title: this.title,
+            review: this.rating,
+            comment: this.review,
+            image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg",
+
+
+          })
+          .then((response) => {
+            console.log(response);
+            this.name = "";
+            this.review = "";
+            this.title = "";
+            this.rating = 0;
+          }),
+        this.$router.push({name: "Thanks",  params: { id: this.id , number: this.number}})
       ), 3000)      
     },
   },

@@ -10,7 +10,7 @@
           xl="3"
           class="mx-auto"
         >
-          <SidePref></SidePref>
+          <SidePref :parentData="id"></SidePref>
         </v-col>
         <v-col
           cols="11"
@@ -28,6 +28,7 @@
             >
               <form>
                 <v-text-field
+                  v-model="name"
                   label="観光地"
                   clearable
                   clear-icon="mdi-close-circle"
@@ -36,6 +37,7 @@
                 ></v-text-field>
                 <v-textarea
                   outlined
+                  v-model="description"
                   label="観光地の説明"
                   clearable
                   clear-icon="mdi-close-circle"
@@ -118,6 +120,7 @@
 import SidePref from "../components/SidePref"
 import SideContents from "../components/SubContents"
 export default {
+  props: ["id", "number"],
   components: {
     SidePref,
     SideContents

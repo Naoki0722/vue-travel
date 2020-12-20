@@ -1,24 +1,30 @@
 <template>
   <div class="text-center pr-3">
-    <h2>鹿児島県</h2>
-    <img src="https://www.illust-box.jp/db_img/sozai/00013/136187/watermark.jpg" width="150" class="d-block mx-auto">
-    <h3 class="py-7">鹿児島県とは？</h3>
-    <p class="text-left">九州の南に位置する南国の県。説明文が入ります。説明文が入ります。説明文が入ります。説明文説明文説明文説明文説明文説明文説明文説明文説明文文ですよ</p>
+    <h2>{{prefecture}}</h2>
+    <img :src=img width="150" class="d-block mx-auto">
+    <h3 class="py-7">{{prefecture}}とは？</h3>
+    <p class="text-left">{{description}}</p>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  props: ["parentData"],
   data() {
     return {
-      lists: [
-        {
-          pref:"鹿児島",
-          description: "九州の南に位置する南国の県。説明文が入ります。説明文が入ります。説明文が入ります。説明文説明文説明文説明文説明文説明文説明文説明文説明文文ですよ"
-        }
-      ]
+          prefecture:"",
+          img: "",
+          description: ""
     }
   },
-  
+  async created() {
+    let item = await axios.get(
+      'http://localhost:8001/api/prefectures/' + this.parentData
+    );
+    this.prefecture = item.data.data.pref.pref_name;
+    this.img = item.data.data.pref.pref_image_path;
+    this.description = item.data.data.pref.pref_description;
+  }
 }
 </script>
