@@ -19,9 +19,13 @@
             v-model="valid"
             lazy-validation
             class="px-4 mt-4"
+            name="contact"
+            @submit.prevent="onSubmit"
           >
+          <input type="hidden" name="form-name" value="contact" />
             <v-text-field
               v-model="name"
+              name="name"
               :counter="10"
               :rules="nameRules"
               clearable
@@ -32,13 +36,15 @@
             <v-text-field
               v-model="email"
               :rules="emailRules"
+              name="email"
               label="メールアドレス"
               clearable
               clear-icon="mdi-close-circle"
               required
             ></v-text-field>
             <v-textarea
-              v-model="contact"
+              v-model="content"
+              name="content"
               label="お問い合わせ内容"
               clearable
               clear-icon="mdi-close-circle"
@@ -46,7 +52,7 @@
             ></v-textarea>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
+                <!-- <v-btn
                   rounded
                   color="green accent-2"
                   class="mr-4 my-10"
@@ -55,9 +61,22 @@
                   @click="loader = 'loading'"
                 >
                   投稿する
+                </v-btn> -->
+                <v-btn
+                  rounded
+                  color="green accent-2"
+                  class="mr-4 my-10"
+                  type="submit"
+                >
+                  投稿する
                 </v-btn>
             </v-card-actions>
           </v-form>
+          <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+            <input type="text" name="name" />
+            <input type="email" name="email" />
+            <textarea name="content"></textarea>
+          </form>
         </v-card>
       </v-col>
     </v-row>
@@ -65,22 +84,54 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       loader: null,
-      loading: false
+      loading: false,
+      name: "",
+      email: "",
+      content: ""
+
     }
   },
-  watch: {
-    loader () {
-      const l = this.loader
-      this[l] = !this[l]
+  // watch: {
+  //   loader () {
+  //     const l = this.loader
+  //     this[l] = !this[l]
+  //     const params = new URLSearchParams()
+  //     params.append('form-name', 'contact')
+  //     params.append('name', this.name)
+  //     params.append('email', this.email)
+  //     params.append('content', this.content)
+  //     console.log(params.getAll('message'))
 
-      setTimeout(() => (
-        this.$router.push({name: "ContactThanks"})
-      ), 3000)      
-    },
-  },  
+        
+  //     setTimeout(() => (
+  //     axios
+  //       .post('/', params)
+  //       .then(() => {
+  //         this.$router.push({name: "ContactThanks"})
+  //       })
+  //     ), 3000)      
+  //   },
+  // },
+  methods: {
+    onSubmit() {
+      const params = new URLSearchParams()
+      params.append('form-name', 'contact')
+      params.append('name', this.name)
+      params.append('email', this.email)
+      params.append('content', this.content)
+      console.log(params.getAll('message'))
+
+      axios
+        .post('/', params)
+        .then(() => {
+
+        })
+    }
+  },
 }
 </script>
