@@ -129,7 +129,7 @@ export default {
       axios
         .post('/', params)
         .then(() => {
-
+          this.$router.push({name: "ContactThanks"})
         })
     }
   },
