@@ -10,11 +10,11 @@
         class="mx-auto"
       >
         <v-card
-          class="mx-auto mt-10"
+          class="mx-auto mt-10 px-10"
           elevation="5"
         >
           <v-card-title class="d-block text-center display-1">お問い合わせフォーム</v-card-title>
-          <v-form
+          <!-- <v-form
             ref="form"
             v-model="valid"
             lazy-validation
@@ -22,7 +22,6 @@
             name="contact"
             @submit.prevent="onSubmit"
           >
-          <input type="hidden" name="form-name" value="contact" />
             <v-text-field
               v-model="name"
               name="name"
@@ -52,7 +51,7 @@
             ></v-textarea>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <!-- <v-btn
+                <v-btn
                   rounded
                   color="green accent-2"
                   class="mr-4 my-10"
@@ -61,22 +60,45 @@
                   @click="loader = 'loading'"
                 >
                   投稿する
-                </v-btn> -->
-                <v-btn
-                  rounded
-                  color="green accent-2"
-                  class="mr-4 my-10"
-                  type="submit"
-                >
-                  投稿する
                 </v-btn>
             </v-card-actions>
-          </v-form>
-          <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+          </v-form> -->
+          <v-text-field
+            v-model="name"
+            label="お名前"
+            required
+          />
+          <v-text-field
+            v-model="email"
+            label="メールアドレス"
+            required
+          />
+          <v-textarea
+            v-model="message"
+            label="お問い合わせ内容"
+          />
+          <v-text-field
+            v-model="botfield"
+            label="人間は入力しないでください"
+            v-show="false"
+          />
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+            rounded
+            color="green accent-2"
+            class="mr-4 my-10"
+            @click="submit"
+            >
+              送信
+            </v-btn>
+          </v-card-actions>
+
+          <!-- <form name="contact" netlify netlify-honeypot="bot-field" hidden>
             <input type="text" name="name" />
             <input type="email" name="email" />
-            <textarea name="content"></textarea>
-          </form>
+            <textarea name="message"></textarea>
+          </form> -->
         </v-card>
       </v-col>
     </v-row>
@@ -88,11 +110,11 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      loader: null,
-      loading: false,
+      // loader: null,
+      // loading: false,
       name: "",
       email: "",
-      content: ""
+      message: ""
 
     }
   },
@@ -118,13 +140,12 @@ export default {
   //   },
   // },
   methods: {
-    onSubmit() {
+    async submit() {
       const params = new URLSearchParams()
-      params.append('form-name', 'contact')
+      params.append('form-name', 'contact2')
       params.append('name', this.name)
       params.append('email', this.email)
-      params.append('content', this.content)
-      console.log(params.getAll('message'))
+      params.append('content', this.message)
 
       axios
         .post('/', params)
