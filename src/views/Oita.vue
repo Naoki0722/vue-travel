@@ -1,117 +1,137 @@
 <template>
   <div>
-    <h2>basic</h2>
-    <star-rating v-model="rating"></star-rating>
-    <v-card
-      elevation="2"
-      max-width="600"
-    >
-      <v-card-title>太宰府天満宮</v-card-title>
-      <v-img
-        src="https://lh3.googleusercontent.com/proxy/ut2MTHOiN4NpsTPPrfiaB0e8jWqFlK7pO0i_MXsNmQBM5cmbPMfZTyNIKCHZuMKZK_I1eiH5ZT-URDWDx1yeWJ4hIrePYVxOVrQaTIv_tiEF28sAEDM9kg5SBph-Fjxzeffc"
-        alt=""
-        
-        height="100px"
-        width="200"
-      >
-      </v-img>
-      <v-card-subtitle>福岡県福岡市</v-card-subtitle>
-      <v-card-text>説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文</v-card-text>
-    </v-card>
-
-    <v-card
-      elevation="16"
-      max-width="400"
-      class="mx-auto"
-    >
-      <v-virtual-scroll
-        :bench="benched"
-        :items="items"
-        height="300"
-        item-height="100"
-      >
-        <template v-slot:default="{ item }">
-          <v-list-item :key="item">
-            <v-list-item-content>
-              <v-list-item-title>
-                User Database Record <strong>ID {{ item }}</strong>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-        </template>
-      </v-virtual-scroll>
-    </v-card>
-
-
-    <v-card
-      elevation="16"
-      max-width="400"
-      class="mx-auto"
-      height="500"
-    >
-      <v-virtual-scroll
-        :bench="benched"
-        :items="items"
-        height="300"
-        item-height="300"
-      >
-        <v-img
-          src="https://lh3.googleusercontent.com/proxy/ut2MTHOiN4NpsTPPrfiaB0e8jWqFlK7pO0i_MXsNmQBM5cmbPMfZTyNIKCHZuMKZK_I1eiH5ZT-URDWDx1yeWJ4hIrePYVxOVrQaTIv_tiEF28sAEDM9kg5SBph-Fjxzeffc"
-          alt=""
-          class="align-end"
-          height="100px"
-        ></v-img>
-         <v-card-subtitle >太宰府天満宮</v-card-subtitle>
-        <v-card-text>３号線沿いにある人気観光地</v-card-text>
-        <v-card-actions>
-          <v-btn>詳しくみる</v-btn>
-        </v-card-actions>
-
-          <v-divider></v-divider>
-      </v-virtual-scroll>
-    </v-card>
-
-    <div class="sub_contents">
-      <v-card  width="70%" class="mt-5 mx-auto">
-        <v-img
-          src="https://lh3.googleusercontent.com/proxy/ut2MTHOiN4NpsTPPrfiaB0e8jWqFlK7pO0i_MXsNmQBM5cmbPMfZTyNIKCHZuMKZK_I1eiH5ZT-URDWDx1yeWJ4hIrePYVxOVrQaTIv_tiEF28sAEDM9kg5SBph-Fjxzeffc"
-          alt=""
-          class="align-end"
-          
-        >
-          <v-card-title>太宰府天満宮</v-card-title>
-        </v-img>
-        <v-card-subtitle>福岡県太宰府市</v-card-subtitle>
-        <v-card-text>３号線沿いにある人気観光地</v-card-text>
-        <v-card-actions>
-          <v-btn>詳しくみる</v-btn>
-        </v-card-actions>
-      </v-card>
-      <v-card  width="70%" class="mt-5 mx-auto">
-        <v-img
-          src="https://lh3.googleusercontent.com/proxy/ut2MTHOiN4NpsTPPrfiaB0e8jWqFlK7pO0i_MXsNmQBM5cmbPMfZTyNIKCHZuMKZK_I1eiH5ZT-URDWDx1yeWJ4hIrePYVxOVrQaTIv_tiEF28sAEDM9kg5SBph-Fjxzeffc"
-          alt=""
-          class="align-end"
-        >
-          <v-card-title>太宰府天満宮</v-card-title>
-        </v-img>
-        <v-card-subtitle>福岡県太宰府市</v-card-subtitle>
-        <v-card-text>３号線沿いにある人気観光地</v-card-text>
-        <v-card-actions>
-          <v-btn>詳しくみる</v-btn>
-        </v-card-actions>
-      </v-card>
-    </div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="3" md="3" lg="3" xl="3">
+          <SidePref :parentData = "id"></SidePref>
+        </v-col>
+        <v-col cols="10" sm="6" md="6" lg="6" xl="6" class="mx-auto">
+              <v-row align="center" class="mx-auto">
+                <v-col cols="9" sm="6" md="6" lg="6" xl="3">
+                  <v-text-field
+                    label="検索キーワード"
+                    width="40%"
+                    prepend-icon="mdi-clipboard-search"
+                    v-model="keyword"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="2" sm="3" md="3" lg="3" xl="3">
+                  <v-btn
+                    rounded
+                    color="green accent-2"
+                    class="px-3"
+                    right
+                    @click="search"
+                  >
+                    検索
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" sm="3" md="3" lg="3" xl="3" class="text-center">
+                  <v-btn
+                    rounded
+                    color="green accent-2"
+                    class="px-3"
+                    right
+                    @click="PostRev"
+                  >
+                    観光地追加
+                  </v-btn>
+                </v-col>
+                <v-col cols="12"  class="text-center headline">
+                  検索結果：{{listCount}}件
+                </v-col>
+              </v-row>
+            <v-card
+              elevation="2"
+              max-width="600"
+              class="my-5"
+              style="position: relative"
+              v-for="(list ,index) in displayLists" :key="index"
+            >
+              <v-card-title>{{list.place_name}}</v-card-title>
+              <v-card-text class="pb-10">
+                {{list.description}}
+              </v-card-text>
+              <v-card-actions>
+                <v-btn absolute bottom right @click="$router.push({ name: 'Sightseeing', params: { number: list.id } })">続きをみる</v-btn>
+              </v-card-actions>
+            </v-card>
+              <v-pagination
+                v-model="page"
+                :length="length"
+                circle
+                @input="pageChange"
+              ></v-pagination>
+        </v-col>
+        <v-col cols="10" sm="3" md="3" lg="3" xl="3" class="mx-auto">
+          <SubContents></SubContents>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
+import SubContents from "../components/SubContents"
+import SidePref from "../components/SidePref"
+import axios from 'axios'
 export default {
-    data: () => ({
-      benched: 0,
-      items: ["りんご","ごりら","らっぱ","ぱんつ","つみき","キリスト教","うんこ"]
-  }),
+  props: ["id"],
+  data() {
+    return {
+      keyword: "",
+      page: 1,
+      length: 0,
+      lists: [],
+      listCount: "",
+      displayLists: [],
+      pageSize: 5,
+      detail: "",
+      pagelists: []
+    }
+  },
+  async created() {
+    let item = await axios.get(
+      'http://localhost:8001/api/prefectures/40'
+    );
+    this.lists.push(item.data.data.pref_data);
+    // console.log(item.data.data.pref_data);
+    // console.log(this.lists[0]);
+    this.listCount = this.lists[0].length;
+
+    this.length = Math.ceil(this.lists[0].length / this.pageSize)
+    this.displayLists = this.lists[0].slice(0, this.pageSize)
+  },
+  components: {
+    SubContents,
+    SidePref
+  },
+  methods: {
+    PostRev() {
+      this.$router.push({name: "SightseeingPost", params: {id: this.id}})
+    },
+    pageChange(pageNumber) {
+      this.displayLists = this.lists[0].slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
+    },
+    search() {
+      let lists = []
+      let all = this.lists[0]
+      for (let i in all) {
+        let list = all[i]
+        if(list.place_name.indexOf(this.keyword) !== -1) {
+          lists.push(list)
+          this.pagelists.push(list)
+        }
+        
+      }
+      //検索件数の表示
+      this.listCount = lists.length;
+      //表示する観光地を変更するため、一度displayListsを空に
+      this.displayLists.length = 0;
+      this.displayLists = lists.slice(0, this.pageSize)
+
+      return lists
+    }
+  },
 }
 </script>

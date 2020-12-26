@@ -12,6 +12,7 @@
                     label="検索キーワード"
                     width="40%"
                     prepend-icon="mdi-clipboard-search"
+                    v-model="keyword"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="2" sm="3" md="3" lg="3" xl="3">
@@ -20,6 +21,7 @@
                     color="green accent-2"
                     class="px-3"
                     right
+                    @click="search"
                   >
                     検索
                   </v-btn>
@@ -77,13 +79,15 @@ export default {
   props: ["id"],
   data() {
     return {
+      keyword: "",
       page: 1,
       length: 0,
       lists: [],
       listCount: "",
       displayLists: [],
       pageSize: 5,
-      detail: ""
+      detail: "",
+      pagelists: []
     }
   },
   async created() {
@@ -92,6 +96,7 @@ export default {
     );
     this.lists.push(item.data.data.pref_data);
     // console.log(item.data.data.pref_data);
+    // console.log(this.lists[0]);
     this.listCount = this.lists[0].length;
 
     this.length = Math.ceil(this.lists[0].length / this.pageSize)
@@ -107,7 +112,25 @@ export default {
     },
     pageChange(pageNumber) {
       this.displayLists = this.lists[0].slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
+    },
+    search() {
+      let lists = []
+      let all = this.lists[0]
+      for (let i in all) {
+        let list = all[i]
+        if(list.place_name.indexOf(this.keyword) !== -1) {
+          lists.push(list)
+          this.pagelists.push(list)
+        }
+      }
+      //検索件数の表示
+      this.listCount = lists.length;
+      //表示する観光地を変更するため、一度displayListsを空に
+      this.displayLists.length = 0;
+      this.displayLists = lists.slice(0, this.pageSize)
+
+      return lists
     }
-  }
+  },
 }
 </script>

@@ -61,11 +61,13 @@
                 v-model="rating"
               ></v-rating>
               <v-file-input
-                v-model="files"
+                type="file"
                 label="画像"
+                name="image"
                 multiple
                 prepend-icon="mdi-paperclip"
                 class="my-5"
+                @change="fileSelect"
               >
                 <template v-slot:selection="{ text }">
                   <v-chip
@@ -124,6 +126,7 @@ export default {
       name: "",
       review: "",
       title: "",
+      img: "",
       rating: 0,
       loader: null,
       loading: false,
@@ -142,9 +145,7 @@ export default {
             title: this.title,
             review: this.rating,
             comment: this.review,
-            image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg",
-
-
+            img: this.img
           })
           .then((response) => {
             console.log(response);
@@ -155,6 +156,25 @@ export default {
           }),
         this.$router.push({name: "Thanks",  params: { id: this.id , number: this.number}})
       ), 3000)      
+    },
+  },
+  methods: {
+    getBase64(file) {
+      return new Promise((resolve,reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      })
+    },
+    fileSelect(e) {
+      const images = e
+      console.log(images[0])
+      this.getBase64(images[0])
+        .then((response) => {
+          this.img = response
+        })
     },
   },
 }

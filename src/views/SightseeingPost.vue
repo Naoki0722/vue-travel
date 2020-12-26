@@ -35,6 +35,16 @@
                   class="pt-10 pb-5"
                   height="50"
                 ></v-text-field>
+                <v-file-input
+                  type="file"
+                  label="観光地画像"
+                  name="image"
+                  multiple
+                  prepend-icon="mdi-paperclip"
+                  class="my-5"
+                  @change="tourImageSelected"
+                >
+                </v-file-input>
                 <v-textarea
                   outlined
                   v-model="description"
@@ -77,11 +87,13 @@
                   v-model="rating"
                 ></v-rating>
                 <v-file-input
-                  v-model="files"
+                  type="file"
                   label="画像"
+                  name="image"
                   multiple
                   prepend-icon="mdi-paperclip"
                   class="my-5"
+                  @change="imageSelected"
                 >
                   <template v-slot:selection="{ text }">
                     <v-chip
@@ -140,9 +152,11 @@ export default {
     return {
       place_name: "",
       description: "",
+      tourist_img: "",
       name: "",
       comment: "",
       title: "",
+      img: "",
       rating: 0,
       loader: null,
       loading: false,
@@ -158,13 +172,13 @@ export default {
           .post('http://localhost:8001/api/tourists', {
             place_name: this.place_name,
             description: this.description,
-            place_image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg",
+            tourist_img: this.tourist_img,
             pref_id: this.id,
             name: this.name,
             title: this.title,
             review: this.rating,
             comment: this.comment,
-            image_path: "https://spi-ra.jp/wp-content/uploads/2019/11/42312790_m-1080x720.jpg"
+            img: this.img
 
 
           })
@@ -177,10 +191,52 @@ export default {
             this.review = "";
             this.title = "";
             this.rating = 0;
+            this.tourist_img = "";
+            this.img = "";
           }),
         this.$router.push({name: "Thanks",  params: { id: this.id}})
-      ), 3000)      
+      ), 4000)      
     },
+  },
+  methods: {
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      })
+    },
+    tourImageSelected(e) {
+      const images = e
+      console.log(images[0])
+      this.getBase64(images[0])
+        .then((response) => {
+          this.tourist_img = response
+        })
+        .catch(e => {
+          //エラー発生時
+          console.log(e)
+        })
+        .finally(() => {
+          console.log('１枚目の選択完了')
+        })
+    },
+    imageSelected(e) {
+      const images = e
+      console.log(images[0])
+      this.getBase64(images[0])
+        .then((response) => {
+          this.img = response
+        })
+        .catch(e => {
+          //エラー発生時
+          console.log(e)
+        })
+        .finally(() => {
+          console.log('２枚目の選択完了')
+        })
+    }
   },
 }
 </script>
