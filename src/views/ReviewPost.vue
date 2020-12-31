@@ -139,7 +139,7 @@ export default {
 
       setTimeout(() => (
         axios
-          .post('http://localhost:8001/api/comments', {
+          .post('https://desolate-chamber-49342.herokuapp.com/api/comments', {
             tourist_id: this.number,
             name: this.name,
             title: this.title,

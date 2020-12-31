@@ -34,7 +34,7 @@ export default {
     }
   },
   async created() {
-    let items =await axios.get('http://localhost:8001/api/tourists')
+    let items =await axios.get('https://desolate-chamber-49342.herokuapp.com/api/tourists')
     this.lists.push(items.data.data);
     console.log(this.lists[0]);
   },

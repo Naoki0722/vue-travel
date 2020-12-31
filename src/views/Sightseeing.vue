@@ -170,7 +170,7 @@ export default {
   },
   async created() {
     let item = await axios.get(
-      'http://localhost:8001/api/tourists/' + this.sendNumber
+      'https://desolate-chamber-49342.herokuapp.com/api/tourists/' + this.sendNumber
     );
     // 観光地詳細情報
     this.title = item.data.data.item.place_name;
@@ -198,7 +198,7 @@ export default {
     async showChildText(listId) {
       this.sendNumber = listId;
       let item = await axios.get(
-        'http://localhost:8001/api/tourists/' + this.sendNumber
+        'https://desolate-chamber-49342.herokuapp.com/api/tourists/' + this.sendNumber
       );
       // 観光地詳細情報
       this.title = item.data.data.item.place_name;

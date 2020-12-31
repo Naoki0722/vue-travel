@@ -89,7 +89,7 @@ export default {
   methods: {
     //検索ボタンを押さない状態で実行は全数表示、検索ボタンを押して実行はkeywordに当てはままった物だけを実行する。
     async search() {
-      let response = await axios.get(`http://localhost:8001/api/prefectures?pref=${this.id}&page=${this.page}&keyword=${this.keyword}`)
+      let response = await axios.get(`https://desolate-chamber-49342.herokuapp.com/api/prefectures?pref=${this.id}&page=${this.page}&keyword=${this.keyword}`)
       let res = response.data.data
       this.displayLists = res.data
       this.length = res.last_page
