@@ -96,7 +96,7 @@ export default {
           params.append('form-name', 'contact2')
           params.append('name', this.name)
           params.append('email', this.email)
-          params.append('content', this.message)
+          params.append('message', this.message)
   
           axios
             .post('/', params)
