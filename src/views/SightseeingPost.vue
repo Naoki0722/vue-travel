@@ -213,6 +213,7 @@ export default {
       this.getBase64(images[0])
         .then((response) => {
           this.tourist_img = response
+          console.log(response)
         })
         .catch(e => {
           //エラー発生時
@@ -228,6 +229,7 @@ export default {
       this.getBase64(images[0])
         .then((response) => {
           this.img = response
+          console.log(response)
         })
         .catch(e => {
           //エラー発生時
