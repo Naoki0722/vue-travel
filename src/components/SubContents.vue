@@ -17,7 +17,9 @@
         readonly
       ></v-rating>
       <v-card-actions>
-        <v-btn @click="$router.push({ path: `/pref/${list.pref_id}/${list.id}` })">詳しくみる</v-btn>
+        <!-- ボタンのメソッドでのデータを親に渡す処理に変更した -->
+        <!-- <v-btn @click="$router.push({ path: `/pref/${list.pref_id}/${list.id}` });">詳しくみる</v-btn> -->
+        <v-btn @click="sendData(list.pref_id,list.id)">詳しくみる</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -35,6 +37,12 @@ export default {
     let items =await axios.get('http://localhost:8001/api/tourists')
     this.lists.push(items.data.data);
     console.log(this.lists[0]);
+  },
+  methods: {
+    sendData(prefId,listId) {
+      this.$router.push({ path: `/pref/${prefId}/${listId}` })
+      this.$emit("getChildText", listId);
+    }
   },
 }
 </script>

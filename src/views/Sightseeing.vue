@@ -136,7 +136,7 @@
           xl="3"
           class="mx-auto"
         >
-          <SideContents></SideContents>
+          <SubContents @getChildText="showChildText"></SubContents>
         </v-col>
       </v-row>
     </v-container>
@@ -147,12 +147,14 @@
 <script>
 import truncate from 'vue-truncate-collapsed'
 import SidePref from "../components/SidePref"
-import SideContents from "../components/SubContents"
+import SubContents from "../components/SubContents"
 import axios from 'axios'
 export default {
   props: ["id","number"],
   data() {
     return {
+      sendId: this.id,
+      sendNumber: this.number,
       title: "",
       image: "",
       description: "",
@@ -166,12 +168,9 @@ export default {
 
     }
   },
-  // computed() {
-  //   this.rating = 
-  // },
   async created() {
     let item = await axios.get(
-      'http://localhost:8001/api/tourists/' + this.number
+      'http://localhost:8001/api/tourists/' + this.sendNumber
     );
     // 観光地詳細情報
     this.title = item.data.data.item.place_name;
@@ -181,7 +180,6 @@ export default {
     // それに付随するコメント情報
     this.lists.push(item.data.data.comments);
     this.length = Math.ceil(this.lists[0].length / this.pageSize);
-    console.log(this.length);
 
     this.displayLists = this.lists[0].slice(0, this.pageSize);
     let starValue = this.lists[0];
@@ -192,12 +190,43 @@ export default {
       aveRaview += parseFloat(starValue[i].review);
     }
     // レビュー数の平均を算出
-    this.rating = Math.round(aveRaview/parseFloat(starValue.length) * 10 / 10);
+    const starRev = Math.floor(aveRaview *10 / parseFloat(starValue.length))
+
+    this.rating = starRev / 10;
   },
   methods: {
+    async showChildText(listId) {
+      this.sendNumber = listId;
+      let item = await axios.get(
+        'http://localhost:8001/api/tourists/' + this.sendNumber
+      );
+      // 観光地詳細情報
+      this.title = item.data.data.item.place_name;
+      this.image = item.data.data.item.place_image_path;
+      this.description = item.data.data.item.description;
+
+      // それに付随するコメント情報
+      // 一度値が入っているので空にする
+      this.lists.length = []
+      this.lists.push(item.data.data.comments);
+      this.length = Math.ceil(this.lists[0].length / this.pageSize);
+
+      this.displayLists = this.lists[0].slice(0, this.pageSize);
+      let starValue = this.lists[0];
+      
+      let aveRaview = 0;
+      // レビュー数の合計を算出
+      for (let i = 0; i < starValue.length; i++) {
+        aveRaview += parseFloat(starValue[i].review);
+      }
+      // レビュー数の平均を算出
+      const starRev = Math.floor(aveRaview *10 / parseFloat(starValue.length))
+
+      this.rating = starRev / 10;
+    },
+
     hyouka(rating) {
       this.rating = rating
-      console.log(this.rating)
     },
     PrefPage() {
       this.$router.push({name: "Pref", params: {id:this.id}})
@@ -211,7 +240,7 @@ export default {
   },
   components: {
     SidePref,
-    SideContents,
+    SubContents,
     truncate
   }
 }

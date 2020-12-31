@@ -1,15 +1,16 @@
 <template>
+<!-- ここはテスト用の場所です。 -->
   <div>
     <v-container>
       <v-row>
-        <v-col cols="12" sm="3" md="3" lg="3" xl="3">
+        <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3">
           <SidePref :parentData = "id"></SidePref>
-        </v-col>
+        </v-col> -->
         <v-col cols="10" sm="6" md="6" lg="6" xl="6" class="mx-auto">
               <v-row align="center" class="mx-auto">
                 <v-col cols="9" sm="6" md="6" lg="6" xl="3">
                   <v-text-field
-                    label="検索キーワード"
+                    label="観光地名を入力"
                     width="40%"
                     prepend-icon="mdi-clipboard-search"
                     v-model="keyword"
@@ -26,7 +27,7 @@
                     検索
                   </v-btn>
                 </v-col>
-                <v-col cols="12" sm="3" md="3" lg="3" xl="3" class="text-center">
+                <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3" class="text-center">
                   <v-btn
                     rounded
                     color="green accent-2"
@@ -36,9 +37,9 @@
                   >
                     観光地追加
                   </v-btn>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12"  class="text-center headline">
-                  検索結果：{{listCount}}件
+                  検索結果：{{total}}件
                 </v-col>
               </v-row>
             <v-card
@@ -60,7 +61,7 @@
                 v-model="page"
                 :length="length"
                 circle
-                @input="pageChange"
+                :total-visible="10"
               ></v-pagination>
         </v-col>
         <v-col cols="10" sm="3" md="3" lg="3" xl="3" class="mx-auto">
@@ -72,66 +73,41 @@
 </template>
 
 <script>
-import SubContents from "../components/SubContents"
-import SidePref from "../components/SidePref"
 import axios from 'axios'
 export default {
-  props: ["id"],
   data() {
     return {
-      keyword: "",
+      displayLists: [],
       page: 1,
       length: 0,
-      lists: [],
-      listCount: "",
-      displayLists: [],
-      pageSize: 5,
-      detail: "",
-      pagelists: []
-    }
-  },
-  async created() {
-    let item = await axios.get(
-      'http://localhost:8001/api/prefectures/40'
-    );
-    this.lists.push(item.data.data.pref_data);
-    // console.log(item.data.data.pref_data);
-    // console.log(this.lists[0]);
-    this.listCount = this.lists[0].length;
+      total: 0,
+      keyword: "",
+      id: "40"
 
-    this.length = Math.ceil(this.lists[0].length / this.pageSize)
-    this.displayLists = this.lists[0].slice(0, this.pageSize)
-  },
-  components: {
-    SubContents,
-    SidePref
+
+    }
   },
   methods: {
-    PostRev() {
-      this.$router.push({name: "SightseeingPost", params: {id: this.id}})
-    },
-    pageChange(pageNumber) {
-      this.displayLists = this.lists[0].slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
-    },
-    search() {
-      let lists = []
-      let all = this.lists[0]
-      for (let i in all) {
-        let list = all[i]
-        if(list.place_name.indexOf(this.keyword) !== -1) {
-          lists.push(list)
-          this.pagelists.push(list)
-        }
-        
-      }
-      //検索件数の表示
-      this.listCount = lists.length;
-      //表示する観光地を変更するため、一度displayListsを空に
-      this.displayLists.length = 0;
-      this.displayLists = lists.slice(0, this.pageSize)
-
-      return lists
+    //検索ボタンを押さない状態で実行は全数表示、検索ボタンを押して実行はkeywordに当てはままった物だけを実行する。
+    async search() {
+      let response = await axios.get(`http://localhost:8001/api/prefectures?pref=${this.id}&page=${this.page}&keyword=${this.keyword}`)
+      console.log(response)
+      let res = response.data.data
+      this.displayLists = res.data
+      this.length = res.last_page
+      this.total = res.total
     }
   },
+  mounted() {
+    //初期表示
+    this.search()
+  },
+  watch: {
+    //ページネーションクリックによる監視を実施
+    //クリックされたらsearch()を実行(その時はthis.pageが更新されている)
+    page: function() {
+      this.search();
+    }
+  }
 }
 </script>

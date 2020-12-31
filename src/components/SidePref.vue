@@ -20,11 +20,10 @@ export default {
   },
   async created() {
     let item = await axios.get(
-      'http://localhost:8001/api/prefectures/' + this.parentData
-    );
-    this.prefecture = item.data.data.pref.pref_name;
-    this.img = item.data.data.pref.pref_image_path;
-    this.description = item.data.data.pref.pref_description;
+      `http://localhost:8001/api/prefectures/${this.parentData}`);
+    this.prefecture = item.data.data.pref_name;
+    this.img = item.data.data.pref_image_path;
+    this.description = item.data.data.pref_description;
   }
 }
 </script>

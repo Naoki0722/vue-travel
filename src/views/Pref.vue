@@ -38,7 +38,7 @@
                   </v-btn>
                 </v-col>
                 <v-col cols="12"  class="text-center headline">
-                  検索結果：{{listCount}}件
+                  検索結果：{{total}}件
                 </v-col>
               </v-row>
             <v-card
@@ -60,7 +60,7 @@
                 v-model="page"
                 :length="length"
                 circle
-                @input="pageChange"
+                :total-visible="10"
               ></v-pagination>
         </v-col>
         <v-col cols="10" sm="3" md="3" lg="3" xl="3" class="mx-auto">
@@ -79,57 +79,42 @@ export default {
   props: ["id"],
   data() {
     return {
-      keyword: "",
+      displayLists: [],
       page: 1,
       length: 0,
-      lists: [],
-      listCount: "",
-      displayLists: [],
-      pageSize: 5,
-      detail: "",
-      pagelists: []
+      total: 0,
+      keyword: "",
     }
   },
-  async created() {
-    let item = await axios.get(
-      'http://localhost:8001/api/prefectures/' + this.id
-    );
-    this.lists.push(item.data.data.pref_data);
-    // console.log(item.data.data.pref_data);
-    // console.log(this.lists[0]);
-    this.listCount = this.lists[0].length;
-
-    this.length = Math.ceil(this.lists[0].length / this.pageSize)
-    this.displayLists = this.lists[0].slice(0, this.pageSize)
-  },
-  components: {
-    SubContents,
-    SidePref
-  },
   methods: {
+    //検索ボタンを押さない状態で実行は全数表示、検索ボタンを押して実行はkeywordに当てはままった物だけを実行する。
+    async search() {
+      let response = await axios.get(`http://localhost:8001/api/prefectures?pref=${this.id}&page=${this.page}&keyword=${this.keyword}`)
+      let res = response.data.data
+      this.displayLists = res.data
+      this.length = res.last_page
+      this.total = res.total
+    },
     PostRev() {
       this.$router.push({name: "SightseeingPost", params: {id: this.id}})
     },
     pageChange(pageNumber) {
       this.displayLists = this.lists[0].slice( this.pageSize * (pageNumber - 1),this.pageSize * pageNumber )
     },
-    search() {
-      let lists = []
-      let all = this.lists[0]
-      for (let i in all) {
-        let list = all[i]
-        if(list.place_name.indexOf(this.keyword) !== -1) {
-          lists.push(list)
-          this.pagelists.push(list)
-        }
-      }
-      //検索件数の表示
-      this.listCount = lists.length;
-      //表示する観光地を変更するため、一度displayListsを空に
-      this.displayLists.length = 0;
-      this.displayLists = lists.slice(0, this.pageSize)
-
-      return lists
+  },
+  components: {
+    SubContents,
+    SidePref
+  },
+  mounted() {
+    //初期表示
+    this.search()
+  },
+  watch: {
+    //ページネーションクリックによる監視を実施
+    //クリックされたらsearch()を実行(その時はthis.pageが更新されている)
+    page: function() {
+      this.search();
     }
   },
 }
