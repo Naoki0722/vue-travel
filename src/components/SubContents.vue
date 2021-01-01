@@ -34,10 +34,8 @@ export default {
     }
   },
   async created() {
-    console.log('通っています');
     let items =await axios.get('https://desolate-chamber-49342.herokuapp.com/api/tourists')
     this.lists.push(items.data.data);
-    console.log(this.lists[0]);
   },
   methods: {
     sendData(prefId,listId) {
